@@ -30,6 +30,9 @@ with engine.connect() as _conn:
         "ALTER TABLE users ADD COLUMN bio TEXT",
         "ALTER TABLE users ADD COLUMN skills TEXT",
         "ALTER TABLE users ADD COLUMN experience VARCHAR(100)",
+        # Пересоздаём колонку role без CHECK constraint (для новых ролей deputy/assistant)
+        "ALTER TABLE users ADD COLUMN role_new VARCHAR(50) DEFAULT 'employee'",
+        "UPDATE users SET role_new = CAST(role AS TEXT)",
     ]
     for _sql in _migrations:
         try:

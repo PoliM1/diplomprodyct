@@ -17,6 +17,9 @@ class Settings(BaseSettings):
     MAIL_SERVER: str = "smtp.gmail.com"
     MAIL_PORT: int = 587
 
+    # URL приложения (для ссылок в письмах)
+    APP_URL: str = "http://localhost:8000"
+
     # База данных
     DATABASE_URL: str = "sqlite:///./taskflow.db"
 

@@ -7,10 +7,12 @@ import enum
 
 
 class RoleEnum(str, enum.Enum):
-    employee = "employee"
-    manager  = "manager"
-    reviewer = "reviewer"
-    boss     = "boss"
+    employee  = "employee"
+    manager   = "manager"
+    reviewer  = "reviewer"
+    boss      = "boss"
+    deputy    = "deputy"     # Заместитель — права как у boss
+    assistant = "assistant"  # Помощник — права как у boss
 
 
 class TaskStatusEnum(str, enum.Enum):
@@ -32,7 +34,7 @@ class User(Base):
     birth_date       = Column(String(10),  nullable=False)
     hashed_password  = Column(String(255), nullable=False)
     position         = Column(String(255), nullable=False)
-    role             = Column(SAEnum(RoleEnum), default=RoleEnum.employee, nullable=False)
+    role             = Column(String(50), default='employee', nullable=False)
     avatar_url       = Column(String(500), nullable=True)
     gender           = Column(String(10),  nullable=True)   # male / female
     bio              = Column(Text,        nullable=True)   # О себе
@@ -90,7 +92,7 @@ class Task(Base):
     id             = Column(Integer, primary_key=True, index=True)
     title          = Column(String(500), nullable=False)
     description    = Column(Text,        nullable=True)
-    status         = Column(SAEnum(TaskStatusEnum), default=TaskStatusEnum.pending, nullable=False)
+    status         = Column(String(30), default='pending', nullable=False)
     org_id         = Column(Integer, ForeignKey("organizations.id"), nullable=False)
     creator_id     = Column(Integer, ForeignKey("users.id"),         nullable=False)
     assignee_id    = Column(Integer, ForeignKey("users.id"),         nullable=True)

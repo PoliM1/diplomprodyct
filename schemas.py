@@ -45,8 +45,18 @@ class UserCreate(BaseModel):
 
 class UserLogin(BaseModel):
     """Данные для входа"""
-    email: EmailStr
+    email: str   # Валидируем вручную чтобы показывать читаемые ошибки на русском
     password: str
+
+    @field_validator("email")
+    @classmethod
+    def email_valid(cls, v):
+        v = v.strip().lower()
+        if not v:
+            raise ValueError("Введите email")
+        if "@" not in v or "." not in v.split("@")[-1]:
+            raise ValueError("Введите корректный email адрес")
+        return v
 
 
 class UserOut(BaseModel):
